@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>SpokelengthCalc | Keven-Matthew Larrivee-Fontaine</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="css/agency.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/responsive.css" type="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body id="page-top" class="page index" style="background-color: #a6a6a6">
+
+    <section class="spoke-calc" id="spoke-calc" style="background-color: #999999">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                     <h1>Calcul de la longueur des rayons</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <form action="" id="spokelengthform" onsubmit="return false;">
+                        <table>
+
+                            <caption id="tooltip1">Mesures <a href="#"><i class="fa fa-info-circle"><span><h5>Les mesures peuvent avoir une seule décimale et sont en millimètre (ex: 12.3mm)</h5></span></a></caption>
+                            <tr>
+                                <th colspan="2"></th>
+                                <th>Gauche</th>
+                                <th>Droit</th>
+                            </tr>
+                            <tr>
+                                <th>Diamètre de la jante</th>
+                                <th>J</th>
+                                <td colspan="2"><input type="number" step="0.1" name="j" placeholder="Requis" value="" required></td>
+                            </tr>
+                            <tr>
+                                <th>Diamètre du flasque</th>
+                                <th>F</th>
+                                <td><input type="number" step="0.1" name="f1" placeholder="Requis" value="" required></td>
+                                <td><input type="number" step="0.1" name="f2" value=""></td>
+                            </tr>
+                            <tr>
+                                <th>Diamètre des trous</th>
+                                <th>T</th>
+                                <td><input type="number" step="0.1" name="t1" placeholder="Requis" value="" required></td>
+                                <td><input type="number" step="0.1" name="t2" value=""></td>
+                            </tr>
+                            <tr>
+                                <th>Distance entre le centre de l'axe au flasque</th>
+                                <th>A</th>
+                                <td><input type="number" step="0.1" name="a1" placeholder="Requis" value="" required></td>
+                                <td><input type="number" step="0.1" name="a2" value=""></td>
+                            </tr>
+                            <tr>
+                                <th>Nombre de rayons</th>
+                                <th>N</th>
+                                <td colspan="2"><input type="number" step="0.1" name="n" placeholder="Requis" value="" required></td>
+                            </tr>
+                            <tr>
+                                <th>Nombre de croisement</th>
+                                <th>C</th>
+                                <td><input type="number" step="0.1" name="c1" placeholder="Requis" value="" required onkeypress="calculateResult()"></td>
+                                <td><input type="number" step="0.1" name="c2" value=""></td>
+                            </tr>
+                            <tr>
+                                <th id="tooltip1">(Fatbike) Distance horizontale entre deux trous sur la jante <a href="#"><i class="fa fa-info-circle"><span><img src="./img/spokeCalc/fatbike.jpg"></span></a></th>
+                                <th>E</th>
+                                <td colspan="2"><input type="number" step="0.1" name="e" value=""></td>
+                            </tr>
+                        </table>
+                        </br>
+                        <input type="submit" id="submit" class="btn btn-primary" onclick="calculateResult()" value="Calculer">
+                    </form>
+                </div>
+
+                <div class="col-sm-6">
+                    <table>
+                        <caption>Calculs (sera rempli automatiquement)</caption>
+                        <tr>
+                            <th colspan="2"></th>
+                            <th>Gauche</th>
+                            <th>Droit</th>
+                        </tr>
+                        <tr>
+                            <th>(1)</th>
+                            <th>J * J</th>
+                            <td colspan="2"></td>
+                        </tr>
+                        <tr>
+                            <th>(2)</th>
+                            <th>F * F</th>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>(3)</th>
+                            <th>4 * A * A</th>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>(4)</th>
+                            <th>(1) + (2) + (3)</th>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>(5)</th>
+                            <th>2 * J * F</th>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>(6)</th>
+                            <th>Voir tableau cos()</th>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>(7)</th>
+                            <th>(5) * (6)</th>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>(8)</th>
+                            <th>(4) - (7)</th>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>(9)</th>
+                            <th>sqrt(8)</th>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>(10)</th>
+                            <th>(9) - T</th>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>L</th>
+                            <th>(10) / 2</th>
+                            <td id="result1"></td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <table>
+                        <caption>cos()</caption>
+                        <tr>
+                            <th>N</th>
+                            <th>C = 0x</th>
+                            <th>1x</th>
+                            <th>2x</th>
+                            <th>3x</th>
+                            <th>4x</th>
+                            <th>5x</th>
+                        </tr>
+                        <tr>
+                            <th>28</th>
+                            <td>1.0</td>
+                            <td>0.901</td>
+                            <td>0.623</td>
+                            <td>0.223</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <th>32</th>
+                            <td>1.0</td>
+                            <td>0.924</td>
+                            <td>0.707</td>
+                            <td>0.383</td>
+                            <td>-</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <th>36</th>
+                            <td>1.0</td>
+                            <td>0.940</td>
+                            <td>0.766</td>
+                            <td>0.500</td>
+                            <td>0.174</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <th>40</th>
+                            <td>1.0</td>
+                            <td>0.951</td>
+                            <td>0.809</td>
+                            <td>0.588</td>
+                            <td>0.309</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <th>48</th>
+                            <td>1.0</td>
+                            <td>0.966</td>
+                            <td>0.866</td>
+                            <td>0.707</td>
+                            <td>0.500</td>
+                            <td>0.259</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section style="background-color: #a6a6a6">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h1>Experimental: Calcul pour fatbike</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <p>Pour ceux qui sont interessés, la différence du calcul pour Fatbike est que A = A-(E/2).</p>
+                    </br>
+                    <p>De cette manière, nous obtenons les distances horizontales entre les flasques et les trous sur la jante au lieu d'utiliser la distance entre le flasque et le centre de l'axe.</p>
+                    </br>
+                    <p>Cette différence dans les calculs est pour prendre en compte que les trous sur une jante de Fatbike ne sont pas au centre de celle-ci.</p>
+                    </br>
+                    <p>Notez bien que le calcul effucté pour les Fatbike <b>est en test</b>. Les longueurs données peuvent ne pas être les bonnes pour les Fatbike. Si vous avez des commentaires/améliorations à apporter au calcul pour Fatbike <a href="index.php#contact">contactez-moi</a> Merci!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="formula" style="background-color: #999999">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    <h1>Remerciements à</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-4">
+                    <a class="quicklinks" href="http://technocycle.ca/">TechnoCycle</a> pour la formule
+                    </br></br>
+                    <p>Version simplifié gracieuseté de Marc Quintin <i class="fa fa-smile-o"></i> 2002</p>
+                </div>
+                <div class="col-sm-8">
+                    <div class="formula">
+                        <img  src="img/spokeCalc/formula.png">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+    <script src="js/classie.js"></script>
+    <script src="js/cbpAnimatedHeader.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="js/agency.js"></script>
+
+    <script type="text/javascript"></script>
+
+    <script src="js/spokeLengthCalcScript.js"></script>
+</body>
+
+</html>
