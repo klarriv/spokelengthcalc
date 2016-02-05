@@ -19,7 +19,12 @@ function getVariablesLeft(){
   j = parseFloat(theForm.elements["j"].value);
   f1 = parseFloat(theForm.elements["f1"].value);
   t1 = parseFloat(theForm.elements["t1"].value);
-  a1 = parseFloat(theForm.elements["a1"].value);
+  if (theForm.elements["e"].value != ""){
+    a1 = (parseFloat(theForm.elements["a1"].value - (parseFloat(theForm.elements["e"].value) / 2)));
+  }
+  else {
+    a1 = parseFloat(theForm.elements["a1"].value);
+  }
   n = parseFloat(theForm.elements["n"].value);
   c1 = parseFloat(theForm.elements["c1"].value);
 }
@@ -29,7 +34,12 @@ function getVariablesRight(){
 
   f2 = parseFloat(theForm.elements["f2"].value);
   t2 = parseFloat(theForm.elements["t2"].value);
-  a2 = parseFloat(theForm.elements["a2"].value);
+  if (theForm.elements["e"].value != ""){
+    a2 = (parseFloat(theForm.elements["a2"].value - (parseFloat(theForm.elements["e"].value) / 2)));
+  }
+  else {
+    a2 = parseFloat(theForm.elements["a2"].value);
+  }
   c2 = parseFloat(theForm.elements["c2"].value);
 }
 
